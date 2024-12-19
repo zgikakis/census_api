@@ -1,0 +1,6 @@
+# convert df to csv
+df.to_csv('dataframe.csv', index=False)
+
+# create link to save csv to jupyter
+FileLink('dataframe.csv')
+# next: go to jupyter home and download csv
