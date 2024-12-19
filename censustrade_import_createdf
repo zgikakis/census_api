@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-from IPython.display import FileLink
+
 
 # Variables
 year = 2020
