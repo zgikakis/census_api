@@ -42,6 +42,6 @@ if __name__ == "__main__":
 # convert to pandas dataframe
 df = pd.DataFrame(census_data[1:], columns=census_data[0])
 # drop last column, which is redundant
-df = df.iloc[:, :-1]
+df = df.iloc[:, :-2]
 
 print(df)
