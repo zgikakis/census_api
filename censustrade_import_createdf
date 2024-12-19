@@ -20,7 +20,8 @@ def fetch_census_trade_data():
     params = {
         "get": fields,
         "time": f"{year}-12",
-        "I_COMMODITY": {commodity_code}
+        "I_COMMODITY": {commodity_code},
+        "SUMMARY_LVL": "DET"
     }
     
     try:
@@ -43,4 +44,4 @@ df = pd.DataFrame(census_data[1:], columns=census_data[0])
 # drop last column, which is redundant
 df = df.iloc[:, :-1]
 
-#print(df)
+print(df)
