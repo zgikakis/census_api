@@ -1,7 +1,7 @@
 # Retrieves import data from U.S. Census International Trade Data API and converts to pandas dataframe
 # Specify years, 10 digit HS codes, and fields to retreive 
 # Available fields - https://api.census.gov/data/timeseries/intltrade/imports/hs/variables.json
-# Request API key from census.gov if making > 500 API calls per day
+# Request free API key from census.gov if making > 500 API calls per day
 # Accepts 10 digit HS codes
 
 
