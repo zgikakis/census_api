@@ -56,6 +56,7 @@ if __name__ == "__main__":
     df = pd.DataFrame(census_data, columns=imp_cols)
     # Drop last 2 columns, which are redundant
     df = df.iloc[:, :-2]
+    df['action'] = 'imports'
 
 # Set option to display all columns
 pd.set_option('display.max_columns', None)
