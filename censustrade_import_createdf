@@ -15,108 +15,67 @@ start_date = '2020-11'
 end_date = '2020-12'
 imp_fields = "I_COMMODITY,I_COMMODITY_SDESC,I_COMMODITY_LDESC,CTY_CODE,CTY_NAME,GEN_VAL_YR,GEN_QY1_YR,UNIT_QY1"
 exp_fields = "E_COMMODITY,E_COMMODITY_SDESC,E_COMMODITY_LDESC,CTY_CODE,CTY_NAME,ALL_VAL_YR,QTY_1_YR,UNIT_QY1"
-commodity_codes = ['7205100000','2849202000']  # List of 10 digit HS codes
-
+commodity_codes = ['7205100000', '2849202000']  # List of 10 digit HS codes
 
 # Generate a list of months in YYYY-MM format
 date_range = pd.date_range(start=start_date, end=end_date, freq='MS').strftime("%Y-%m").tolist()
 
 # Column name creation
-imp_cols = imp_fields.split(",")
-imp_cols.extend(["time","hs_extra","agg_extra"])
-exp_cols = exp_fields.split(",")
-exp_cols.extend(["time","hs_extra","agg_extra"])
+imp_cols = imp_fields.split(",") + ["time", "hs_extra", "agg_extra"]
+exp_cols = exp_fields.split(",") + ["time", "hs_extra", "agg_extra"]
 
-# Function to fetch imp_data through API
-def fetch_census_trade_imp_data(date_range, commodity_codes):
-    # Base imp_url
-    imp_url = "https://api.census.gov/data/timeseries/intltrade/imports/hs"
-    all_imp_data = []  # List to store all fetched imp_data
+# Function to fetch data through API
+def fetch_census_trade_data(date_range, commodity_codes, trade_type):
+    # Base URL based on trade type
+    base_url = f"https://api.census.gov/data/timeseries/intltrade/{trade_type}/hs"
+    all_data = []  # List to store all fetched data
 
     # Iterate through each year and commodity code
     for date in date_range:
         for commodity_code in commodity_codes:
             params = {
-                "get": imp_fields,
+                "get": imp_fields if trade_type == "imports" else exp_fields,
                 "time": date,
-                "I_COMMODITY": commodity_code,
+                f"{'I' if trade_type == 'imports' else 'E'}_COMMODITY": commodity_code,
                 "SUMMARY_LVL": "DET"
             }
 
             try:
-                response = requests.get(imp_url, params=params)
+                response = requests.get(base_url, params=params)
                 response.raise_for_status()
-                imp_data = response.json()
-                all_imp_data.extend(imp_data[1:])  # Append the imp_data excluding the header
+                data = response.json()
+                all_data.extend(data[1:])  # Append the data excluding the header
 
             except requests.exceptions.HTTPError as http_err:
                 print(f"HTTP error occurred for year {date} and commodity code {commodity_code}: {http_err}")
             except Exception as err:
                 print(f"An error occurred for year {date} and commodity code {commodity_code}: {err}")
 
-    return all_imp_data
+    return all_data
 
-# Function to fetch exp_data through API
-def fetch_census_trade_exp_data(date_range, commodity_codes):
-    # Base exp_url
-    exp_url = "https://api.census.gov/data/timeseries/intltrade/exports/hs"
-    all_exp_data = []  # List to store all fetched exp_data
-
-    # Iterate through each year and commodity code
-    for date in date_range:
-        for commodity_code in commodity_codes:
-            params = {
-                "get": exp_fields,
-                "time": date,
-                "E_COMMODITY": commodity_code,
-                "SUMMARY_LVL": "DET"
-            }
-
-            try:
-                response = requests.get(exp_url, params=params)
-                response.raise_for_status()
-                exp_data = response.json()
-                all_exp_data.extend(exp_data[1:])  # Append the exp_data excluding the header
-
-            except requests.exceptions.HTTPError as http_err:
-                print(f"HTTP error occurred for year {date} and commodity code {commodity_code}: {http_err}")
-            except Exception as err:
-                print(f"An error occurred for year {date} and commodity code {commodity_code}: {err}")
-
-    return all_exp_data
-
-# Call imp_function
+# Main execution
 if __name__ == "__main__":
-    census_imp_data = fetch_census_trade_imp_data(date_range, commodity_codes)
+    # Fetch import and export data
+    census_imp_data = fetch_census_trade_data(date_range, commodity_codes, "imports")
+    census_exp_data = fetch_census_trade_data(date_range, commodity_codes, "exports")
 
     # Convert to pandas DataFrame
-    imp_df = pd.DataFrame(census_imp_data, columns=imp_cols)
-    # Drop last 2 columns, which are redundant
-    imp_df = imp_df.iloc[:, :-2]
+    imp_df = pd.DataFrame(census_imp_data, columns=imp_cols).iloc[:, :-2]
     imp_df["direction"] = "imports"
 
-# Call exp_function
-if __name__ == "__main__":
-    census_exp_data = fetch_census_trade_exp_data(date_range, commodity_codes)
-
-    # Convert to pandas DataFrame
-    exp_df = pd.DataFrame(census_exp_data, columns=exp_cols)
-    # Drop last 2 columns, which are redundant
-    exp_df = exp_df.iloc[:, :-2]
+    exp_df = pd.DataFrame(census_exp_data, columns=exp_cols).iloc[:, :-2]
     exp_df["direction"] = "exports"
 
-# Set option to display all columns and rows
-pd.set_option('display.max_columns', None)
-pd.set_option('display.max_rows', None)
+    # Set option to display all columns and rows
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.max_rows', None)
 
-# print(imp_df)
-# print(exp_df)
+    # Change exp_df column headers to match imp_df and append dataframes
+    exp_df.columns = imp_df.columns
+    combined_df = pd.concat([imp_df, exp_df], ignore_index=True)
 
-# change exp_df column headers to match imp_df
-# combine import and export dataframes, reset index
-exp_df.columns = imp_df.columns
-combined_df = pd.concat([imp_df, exp_df], ignore_index=True)
-# split 'time' column into year and month
-combined_df[['year', 'month']] = combined_df['time'].str.split('-', expand=True)
+    # Split 'time' column into year and month
+    combined_df[['year', 'month']] = combined_df['time'].str.split('-', expand=True)
+
 
 print(combined_df)
