@@ -12,7 +12,7 @@ import pandas as pd
 
 # Variables
 api_key = "api key goes here"
-start_date = '2024-08'
+start_date = '2024-01'
 end_date = '2024-09'
 imp_fields = "I_COMMODITY,I_COMMODITY_SDESC,I_COMMODITY_LDESC,CTY_CODE,CTY_NAME,GEN_VAL_MO,GEN_VAL_YR,GEN_QY1_MO,GEN_QY1_YR,UNIT_QY1"
 impcon_fields = "I_COMMODITY,I_COMMODITY_SDESC,I_COMMODITY_LDESC,CTY_CODE,CTY_NAME,CON_VAL_MO,CON_VAL_YR,CON_QY1_MO,CON_QY1_YR,UNIT_QY1"
