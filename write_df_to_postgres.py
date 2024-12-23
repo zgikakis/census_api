@@ -8,7 +8,7 @@ def copy_chunk(
     with conn.cursor() as cur:
         # Create a buffer
         buffer = StringIO()
-        df_chunk.to_csv(buffer, index=False, header=False)
+        df_chunk.to_csv(buffer, index=True, header=False)
         buffer.seek(0)
 
         copy_sql = sql.SQL('COPY {} FROM STDIN WITH (FORMAT CSV)').format(sql.Identifier(table_name))
