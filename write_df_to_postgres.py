@@ -1,3 +1,8 @@
+import psycopg
+from psycopg import sql
+from io import StringIO
+
+
 # write dataframe to PostgreSQL
 def copy_chunk(
         conn,  
