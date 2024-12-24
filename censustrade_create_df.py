@@ -3,7 +3,7 @@
 # imp_fields and exp_fields lists must be in the same order ie: match corresponding imp and exp fields
 # API documentation, including possible fields - https://www.census.gov/foreign-trade/reference/guides/Guide_to_International_Trade_Datasets.pdf
 # Request free API key from census.gov - or remove key parameter from params if making less than 500 api calls per day
-# Accepts 10 digit HS codes
+# Accepts 10 digit HS codes - https://www.flexport.com/data/
 # can typically return data from current month -2 (can return Oct 2024 data in Dec 2024)
 
 
