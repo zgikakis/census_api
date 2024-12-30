@@ -80,6 +80,8 @@ if __name__ == "__main__":
     # Split 'time' column into year and month, then drop the time column
     combined_df[['year', 'month']] = combined_df['time'].str.split('-', expand=True)
     combined_df = combined_df.drop(columns=['time'])
+    # Add primary key column
+    combined_df['id'] = combined_df.apply(lambda row: f"{row['year']}_{row['month']}_{row['CTY_CODE']}_{row['I_COMMODITY']}_{row['direction']}", axis=1)
 
 # Set option to display all columns and rows
 # pd.set_option('display.max_columns', None)
