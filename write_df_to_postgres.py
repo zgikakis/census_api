@@ -5,7 +5,7 @@ from io import StringIO
 
 # write dataframe to PostgreSQL
 def copy_chunk(
-        conn,  
+        conn,
         df_chunk: pd.DataFrame,
         table_name: str,
 ) -> None:
@@ -13,7 +13,7 @@ def copy_chunk(
     with conn.cursor() as cur:
         # Create a buffer
         buffer = StringIO()
-        df_chunk.to_csv(buffer, index=True, header=False)
+        df_chunk.to_csv(buffer, index=False, header=False)
         buffer.seek(0)
 
         copy_sql = sql.SQL('COPY {} FROM STDIN WITH (FORMAT CSV)').format(sql.Identifier(table_name))
@@ -26,9 +26,8 @@ def copy_chunk(
     conn.commit()
 
 # Usage "postgresql://username:password@hostname:port/dbname"
-conn_string = "postgresql://username:password@hostname:port/dbname"
-# df_chunk = dataframe name
-df_chunk = dataframe_name 
+conn_string = "postgresql://username:password@hostname:5432/dbname"
+df_chunk = dataframe_name
 
 # Establish connection to table_name
 with psycopg.connect(conn_string) as conn:
