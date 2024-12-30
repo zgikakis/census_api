@@ -29,6 +29,6 @@ def copy_chunk(
 conn_string = "postgresql://username:password@hostname:5432/dbname"
 df_chunk = dataframe_name
 
-# Establish connection to table_name
+# Establish connection and write to table_name
 with psycopg.connect(conn_string) as conn:
     copy_chunk(conn, df_chunk, 'table_name')
