@@ -1,5 +1,3 @@
-# work
-
 # censustrade_create_bulk_df.py - 
 -retrieves international trade data from census.gov api for a specified date range and prints the resulting dataframe
 
