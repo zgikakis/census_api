@@ -1,5 +1,5 @@
 # Retrieves import and export data from U.S. Census International Trade Data API for a specified date range and converts to pandas dataframe
-# Specify Variables: start_date, end_date, 10 digit HS codes, and fields to retreive 
+# Specify Variables: api_key, start_date, end_date, 10 digit HS codes, and fields to retreive 
 # imp_fields and exp_fields lists must be in the same order ie: match corresponding imp and exp fields
 # API documentation, including possible fields - https://www.census.gov/foreign-trade/reference/guides/Guide_to_International_Trade_Datasets.pdf
 # Request free API key from census.gov - or remove key parameter from params if making less than 500 api calls per day
