@@ -26,7 +26,7 @@ def copy_chunk(
     conn.commit()
 
 # Usage "postgresql://username:password@hostname:port/dbname"
-conn_string = "postgresql://username:password@hostname:5432/dbname"
+conn_string = "postgresql://username:password@hostname:port/dbname"
 df_chunk = dataframe_name
 
 # Establish connection and write to table_name
