@@ -15,9 +15,9 @@ from io import StringIO
 # Variables
 api_key = "api key goes here"
 conn_string = "postgresql://username:password@host:port/dbname"
-table_name = 'destination table name goes here'
-start_date = '2019-01'
-end_date = '2024-10'
+table_name = "destination table name goes here"
+start_date = "2019-01"
+end_date = "2024-10"
 imp_fields = "I_COMMODITY,I_COMMODITY_SDESC,I_COMMODITY_LDESC,CTY_CODE,CTY_NAME,GEN_VAL_MO,GEN_QY1_MO,GEN_VAL_YR,GEN_QY1_YR,UNIT_QY1"
 impcon_fields = "I_COMMODITY,I_COMMODITY_SDESC,I_COMMODITY_LDESC,CTY_CODE,CTY_NAME,CON_VAL_MO,CON_QY1_MO,CON_VAL_YR,CON_QY1_YR,UNIT_QY1"
 exp_fields = "E_COMMODITY,E_COMMODITY_SDESC,E_COMMODITY_LDESC,CTY_CODE,CTY_NAME,ALL_VAL_MO,QTY_1_MO,ALL_VAL_YR,QTY_1_YR,UNIT_QY1"
