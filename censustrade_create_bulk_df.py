@@ -4,8 +4,8 @@
 # API documentation, including possible fields - https://www.census.gov/foreign-trade/reference/guides/Guide_to_International_Trade_Datasets.pdf
 # Request free API key from census.gov - or remove key parameter from params if making less than 500 api calls per day
 # Accepts 10 digit HS codes - https://hts.usitc.gov/
-# can typically return data from current month -2 (can return Oct 2024 data in Dec 2024)
-
+# data from 2 months prior is typically available the first week of every month (2024-10 will be available December 5, 2024)
+# data release schedule - https://www.census.gov/foreign-trade/schedule.html
 
 import requests
 import pandas as pd
