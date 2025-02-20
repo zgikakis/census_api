@@ -1,6 +1,6 @@
 # 1) Copy and paste this code into notepad
 # 2) Edit the variables section to specify which data to retrieve
-# 3) Go to 'https://jupyter.org/try-jupyter/lab/'
+# 3) Go to: https://jupyter.org/try-jupyter/lab/
 # 4) Create a blank Python (Pyodide) notebook
 # 5) Copy the code from notepad and paste into jupyter notebook
 # 6) Press "Run this cell and advance"
@@ -16,7 +16,7 @@ import pandas as pd
 start_year = '2023'
 end_year = '2024'
 
-# Enter list of 10 digit HTS codes; each list item much be surrounded by quotes "" and separated by comma
+# Enter list of 10 digit HTS codes; each list item must be surrounded by quotes "" and separated by comma
 commodity_codes = ["2504101000", "2504105000", "7602000035","7602000095"]
 
 # Name the file, ending in .csv
@@ -28,7 +28,7 @@ imp_fields = "I_COMMODITY,I_COMMODITY_SDESC,I_COMMODITY_LDESC,CTY_CODE,CTY_NAME,
 impcon_fields = "I_COMMODITY,I_COMMODITY_SDESC,I_COMMODITY_LDESC,CTY_CODE,CTY_NAME,CON_VAL_YR,CON_QY1_YR,UNIT_QY1"
 exp_fields = "E_COMMODITY,E_COMMODITY_SDESC,E_COMMODITY_LDESC,CTY_CODE,CTY_NAME,ALL_VAL_YR,QTY_1_YR,UNIT_QY1"
 
-# Generates a list of months in YYYY-MM format, but only include December months
+# Generates a list of dates in YYYY-MM format and only includes December
 start_date = f'{start_year}-01'
 end_date = f'{end_year}-12'
 date_range = pd.date_range(start=start_date, end=end_date, freq='MS').strftime("%Y-%m").tolist()
